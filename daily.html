@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Sales Report</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f2f4f7;
+}
+
+/* HEADER */
+.header{
+  background:#ffffff;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.header h2{
+  margin:0;
+  color:#0b5394;
+}
+.header p{
+  margin:4px 0 0;
+  font-size:14px;
+  color:#555;
+}
+
+.container{
+  margin:15px;
+  background:#ffffff;
+  padding:15px;
+  border-radius:12px;
+}
+
+.title{
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+/* INFO GRID */
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.info input{
+  padding:10px;
+  width:100%;
+}
+
+/* TABLE */
+.table-wrap{
+  overflow-x:auto;
+  margin-top:15px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1100px;
+}
+th,td{
+  border:1px solid #ccc;
+  padding:6px;
+  text-align:center;
+  font-size:13px;
+}
+th{background:#f0f0f0;}
+table input{
+  width:100%;
+  padding:6px;
+}
+
+/* BUTTONS */
+button{
+  padding:10px;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+}
+.addbtn{
+  background:#0b5394;
+  color:#fff;
+  margin-top:10px;
+}
+.delbtn{
+  background:#e91e63;
+  color:#fff;
+}
+.submitbtn{
+  background:#25D366;
+  color:#fff;
+  width:100%;
+  font-size:18px;
+  padding:14px;
+  margin-top:20px;
+}
+
+/* TOTAL SECTION */
+.total-box input{
+  width:100%;
+  padding:8px;
+  font-weight:bold;
+}
+
+/* SIGNATURE */
+.signature{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+.sig-box{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.sig-box input{
+  padding:8px;
+  border:1px solid #999;
+  border-radius:6px;
+}
+.sig-line{
+  border-top:2px solid #000;
+  margin-top:20px;
+  padding-top:6px;
+  text-align:center;
+  font-weight:600;
+}
+
+@media(max-width:600px){
+  .info{grid-template-columns:1fr;}
+  .signature{grid-template-columns:1fr;}
+}
+p{
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h2>Lostom snacks</h2>
+  <p><a href="https://www.lostomindustries.com">www.lostomindustries.com</a></p>
+</div>
+
+<div class="container">
+
+
+
+<!-- BASIC INFO -->
+<div class="info">
+  <input id="date" type="date" placeholder="Date">
+  <input id="salesExec" placeholder="Sales Executive">
+  <input id="hq" placeholder="Headquarter">
+  <input id="zone" placeholder="Area / Zone">
+  <input id="distributor" placeholder="Distributor Name">
+  <input id="contact" placeholder="Contact No.">
+</div>
+
+<!-- SALES TABLE -->
+<div class="table-wrap">
+<table id="salesTable">
+<tr>
+<th>Sr</th>
+<th>Retailer / Party</th>
+<th>Location</th>
+<th>Product</th>
+<th>Qty</th>
+<th>Rate</th>
+<th>Total</th>
+<th>Payment</th>
+<th>Remarks</th>
+<th>Del</th>
+</tr>
+</table>
+</div>
+
+<button class="addbtn" onclick="addRow()">➕ Add Row</button>
+
+<!-- TOTAL SECTION -->
+<div class="table-wrap total-box">
+<table>
+<tr><td>Total Sales Amount</td><td><input id="totalSales" readonly></td></tr>
+<tr><td>Total Collection</td><td><input id="collection"></td></tr>
+<tr><td>Credit Sales</td><td><input id="credit"></td></tr>
+<tr><td>Cash Sales</td><td><input id="cash"></td></tr>
+</table>
+</div>
+
+<!-- SIGNATURES -->
+<div class="signature">
+  <div class="sig-box">
+    <input id="salesSign" placeholder="Enter Name">
+    <div class="sig-line">Sales Executive Signature</div>
+  </div>
+  <div class="sig-box">
+    <input id="distSign" placeholder="Enter Name">
+    <div class="sig-line">Distributor Signature</div>
+  </div>
+  <div class="sig-box">
+    <input id="managerSign" placeholder="Enter Name">
+    <div class="sig-line">Manager Signature</div>
+  </div>
+</div>
+
+<button class="submitbtn" onclick="sendWhatsApp()">📲 Submit on WhatsApp</button>
+       <p>2010 © Lostom snacks | All Rights Reserved</p>
+
+</div>
+
+<script>
+let sr=1;
+
+function addRow(){
+  let t=document.getElementById("salesTable");
+  let r=t.insertRow(-1);
+
+  r.insertCell(0).innerHTML=sr++;
+  r.insertCell(1).innerHTML="<input>";
+  r.insertCell(2).innerHTML="<input>";
+  r.insertCell(3).innerHTML="<input>";
+  r.insertCell(4).innerHTML="<input type='number' oninput='calc(this)'>";
+  r.insertCell(5).innerHTML="<input type='number' oninput='calc(this)'>";
+  r.insertCell(6).innerHTML="<input readonly>";
+  r.insertCell(7).innerHTML="<input>";
+  r.insertCell(8).innerHTML="<input>";
+  r.insertCell(9).innerHTML="<button class='delbtn' onclick='delRow(this)'>X</button>";
+}
+
+function delRow(btn){
+  btn.parentNode.parentNode.remove();
+  calcTotal();
+}
+
+function calc(el){
+  let row=el.parentNode.parentNode;
+  let qty=Number(row.cells[4].children[0].value)||0;
+  let rate=Number(row.cells[5].children[0].value)||0;
+  row.cells[6].children[0].value=qty*rate;
+  calcTotal();
+}
+
+function calcTotal(){
+  let total=0;
+  document.querySelectorAll("#salesTable tr").forEach((r,i)=>{
+    if(i>0){
+      total+=Number(r.cells[6].children[0].value)||0;
+    }
+  });
+  totalSales.value=total;
+}
+
+function sendWhatsApp(){
+  let msg="DAILY SALES REPORT\n\n";
+  msg+="Date: "+date.value+"\n";
+  msg+="Sales Executive: "+salesExec.value+"\n";
+  msg+="Distributor: "+distributor.value+"\n\n";
+  msg+="Total Sales: ₹"+totalSales.value+"\n";
+  msg+="Collection: ₹"+collection.value+"\n";
+  msg+="Credit: ₹"+credit.value+"\n";
+  msg+="Cash: ₹"+cash.value+"\n\n";
+  msg+="Signatures:\n";
+  msg+="Sales Exec: "+salesSign.value+"\n";
+  msg+="Distributor: "+distSign.value+"\n";
+  msg+="Manager: "+managerSign.value;
+
+  window.open("https://wa.me/917033810886?text="+encodeURIComponent(msg));
+}
+
+addRow();
+</script>
+
+</body>
+</html>

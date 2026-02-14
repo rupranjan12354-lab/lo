@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Statement</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f2f4f7;
+}
+
+/* HEADER */
+.header{
+  background:#ffffff;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.header h2{margin:0;color:#0b5394;}
+.header p{margin:4px 0 0;font-size:14px;color:#555;}
+
+.container{
+  margin:15px;
+  background:#ffffff;
+  padding:15px;
+  border-radius:12px;
+}
+
+.title{
+  text-align:center;
+  font-weight:bold;
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+/* INFO GRID */
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.info input{
+  width:100%;
+  padding:10px;
+}
+
+/* TABLE */
+.table-wrap{
+  overflow-x:auto;
+  margin-top:15px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1300px;
+}
+th,td{
+  border:1px solid #ccc;
+  padding:6px;
+  text-align:center;
+  font-size:13px;
+}
+th{background:#f0f0f0;}
+table input{
+  width:100%;
+  padding:6px;
+}
+
+/* BUTTONS */
+button{
+  padding:10px;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+}
+.addbtn{background:#0b5394;color:#fff;margin-top:10px;}
+.delbtn{background:#e91e63;color:#fff;}
+.submitbtn{
+  background:#25D366;
+  color:#fff;
+  width:100%;
+  font-size:18px;
+  padding:14px;
+  margin-top:20px;
+}
+
+/* SUMMARY */
+.summary input{
+  width:100%;
+  padding:8px;
+  font-weight:bold;
+}
+
+/* SIGNATURE */
+.signature{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+.sig-box{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.sig-box input{
+  padding:8px;
+  border:1px solid #999;
+  border-radius:6px;
+}
+.sig-line{
+  border-top:2px solid #000;
+  margin-top:20px;
+  padding-top:6px;
+  text-align:center;
+  font-weight:600;
+}
+
+@media(max-width:600px){
+  .info{grid-template-columns:1fr;}
+  .signature{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>Lostom snacks</h2>
+  <p><a href="https://www.lostomindustries.com">www.lostomindustries.com</a></p>
+
+<div class="container">
+
+
+
+<div class="info">
+  <input id="name" placeholder="Name">
+  <input id="zone" placeholder="Zone">
+  <input id="hq" placeholder="H.Q.">
+  <input id="period" placeholder="Period">
+  <input id="week" placeholder="Week">
+  <input id="month" placeholder="Month">
+  <input id="designation" placeholder="Designation">
+</div>
+
+<!-- MAIN EXPENSE TABLE -->
+<div class="table-wrap">
+<table id="expenseTable">
+<tr>
+<th>Date</th>
+<th>Day</th>
+<th>Time</th>
+<th>Town</th>
+<th>From</th>
+<th>To</th>
+<th>Daily</th>
+<th>Bus</th>
+<th>Train</th>
+<th>Auto</th>
+<th>Taxi</th>
+<th>Stationery</th>
+<th>Mobile</th>
+<th>Total</th>
+<th>Del</th>
+</tr>
+</table>
+</div>
+
+<button class="addbtn" onclick="addRow()">➕ Add Row</button>
+
+<!-- WEEK SUMMARY -->
+<div class="table-wrap summary">
+<table>
+<tr><th>Week</th><th>Amount</th></tr>
+<tr><td>1st Week (1–7)</td><td><input id="w1" oninput="calcWeek()"></td></tr>
+<tr><td>2nd Week (8–14)</td><td><input id="w2" oninput="calcWeek()"></td></tr>
+<tr><td>3rd Week (15–21)</td><td><input id="w3" oninput="calcWeek()"></td></tr>
+<tr><td>4th Week (22–28)</td><td><input id="w4" oninput="calcWeek()"></td></tr>
+<tr><td>5th Week (29–31)</td><td><input id="w5" oninput="calcWeek()"></td></tr>
+<tr><td><b>TOTAL</b></td><td><input id="totalWeek" readonly></td></tr>
+<tr><td>Less Advance</td><td><input id="advance" oninput="calcWeek()"></td></tr>
+<tr><td><b>NET AMOUNT</b></td><td><input id="netAmount" readonly></td></tr>
+</table>
+</div>
+
+<!-- SIGNATURES -->
+<div class="signature">
+
+  <div class="sig-box">
+    <input id="soSign" placeholder="Enter Name / Signature">
+    <div class="sig-line">S.O.'s Signature</div>
+  </div>
+
+  <div class="sig-box">
+    <input id="asmSign" placeholder="Enter Name">
+    <div class="sig-line">Checked & Verified By (A.S.M.)</div>
+  </div>
+
+  <div class="sig-box">
+    <input id="rsmSign" placeholder="Enter Name">
+    <div class="sig-line">Approved By (R.S.M.)</div>
+  </div>
+  
+
+</div>
+
+<button class="submitbtn" onclick="sendWhatsApp()">📲 Submit on WhatsApp</button>
+2010 © Lostom snacks | All Rights Reserved
+
+</div>
+
+<script>
+function addRow(){
+  var t=document.getElementById("expenseTable");
+  var r=t.insertRow(-1);
+
+  /* TEXT FIELDS */
+  r.insertCell(0).innerHTML="<input type='date'>";
+  r.insertCell(1).innerHTML="<input>";
+  r.insertCell(2).innerHTML="<input type='time'>";
+  r.insertCell(3).innerHTML="<input>";
+  r.insertCell(4).innerHTML="<input>";
+  r.insertCell(5).innerHTML="<input>";
+
+  /* AMOUNT FIELDS */
+  for(let i=6;i<=12;i++){
+    r.insertCell(i).innerHTML="<input type='number' oninput='calc(this)'>";
+  }
+
+  r.insertCell(13).innerHTML="<input readonly>";
+  r.insertCell(14).innerHTML="<button class='delbtn' onclick='delRow(this)'>X</button>";
+}
+
+function delRow(btn){
+  btn.parentNode.parentNode.remove();
+}
+
+function calc(el){
+  var row=el.parentNode.parentNode;
+  var sum=0;
+  for(let i=6;i<=12;i++){
+    sum+=Number(row.cells[i].children[0].value)||0;
+  }
+  row.cells[13].children[0].value=sum;
+}
+
+function calcWeek(){
+  let total =
+    (Number(w1.value)||0)+
+    (Number(w2.value)||0)+
+    (Number(w3.value)||0)+
+    (Number(w4.value)||0)+
+    (Number(w5.value)||0);
+
+  totalWeek.value=total;
+  netAmount.value=total-(Number(advance.value)||0);
+}
+
+function sendWhatsApp(){
+  var msg="EXPENSE STATEMENT\n\n";
+  msg+="Name: "+name.value+"\n";
+  msg+="Zone: "+zone.value+"\n";
+  msg+="Month: "+month.value+"\n\n";
+
+  msg+="Net Amount: ₹"+netAmount.value+"\n\n";
+  msg+="S.O.: "+soSign.value+"\n";
+  msg+="Checked By (ASM): "+asmSign.value+"\n";
+  msg+="Approved By (RSM): "+rsmSign.value+"\n";
+
+  window.open("https://wa.me/917033810886?text="+encodeURIComponent(msg));
+}
+
+addRow();
+addRow();
+</script>
+
+</body>
+</html>
+

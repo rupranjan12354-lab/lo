@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company Dashboard</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f2f4f7;
+}
+
+/* ===== CENTER HEADER ===== */
+.header{
+  background:#ffffff;
+  padding:18px 10px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logo{
+  width:60px;
+  height:60px;
+  margin:0 auto 8px;
+  background:#0b5394;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  border-radius:12px;
+  font-size:14px;
+}
+
+.company-info h2{
+  margin:0;
+  font-size:22px;
+  color:#0b5394;
+}
+.company-info p{
+  margin:4px 0 0;
+  font-size:14px;
+  color:#555;
+}
+
+/* ===== COLORFUL CONTAINER ===== */
+.container{
+  margin:20px;
+  padding:20px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#0b5394,#25D366);
+}
+
+/* ===== VERTICAL BUTTONS ===== */
+.btn{
+  width:100%;
+  padding:18px;
+  margin-bottom:15px;
+  font-size:18px;
+  font-weight:600;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:#fff;
+}
+
+.btn:last-child{
+  margin-bottom:0;
+}
+
+/* BUTTON COLORS */
+.btn1{background:#ffffff;color:#0b5394;}
+.btn2{background:#25D366;}
+.btn3{background:#ff9800;}
+.btn4{background:#f9f91a;}
+.btn5{background:peachpuff;}
+.btn6{background:plum;}
+
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+  .container{
+    margin:12px;
+    padding:15px;
+  }
+  .btn{
+    font-size:20px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ✅ CENTER HEADER -->
+<div class="header">
+  <div class=""><img src="lostom.jpg" width="80px"></div>
+  <div class="company-info">
+    <h2>Lostom snacks</h2>
+    <p><a href="https://www.lostomindustries.com">www.lostomindustries.com</a></p>
+  </div>
+</div>
+
+<!-- COLORFUL BUTTON CONTAINER -->
+<div class="container">
+  <button class="btn btn1"><a href="morning report.html" target="_blank">MORNING REPORT</a></button>
+  <button class="btn btn2"><a href="evng.html" target="_blank">EVENING REPORT</a></button>
+  <button class="btn btn3"><a href="order.html" target="_blank">ORDER FORM</a></button>
+  <button class="btn btn4"><a href="prty appt.html" target="_blank">PARTY APPOINTMENT FORM</a></button>
+  <button class="btn btn5"><a href="expns.html">EXPENSE SHEET</a></button>
+  <button class="btn btn6"><a href="expns.html"><a href="daily.html">DAILY SALES REPORT</a></button>
+</div>
+
+</body>
+</html>
